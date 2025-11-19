@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargador Simple</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #f0f2f5; padding: 50px; }
+        input { padding: 15px; width: 300px; border-radius: 5px; border: 1px solid #ccc; }
+        button { padding: 15px 30px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .loader { margin-top: 20px; display: none; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>Descargador de Videos 📺</h1>
+    <p>Pega un link de YouTube, Instagram o TikTok</p>
+    
+    <input type="text" id="urlInput" placeholder="https://youtube.com/watch?v=...">
+    <button onclick="descargar()">Descargar MP4</button>
+    
+    <div id="mensaje" class="loader">Procesando descarga... (puede tardar unos segundos)</div>
+
+    <script>
+        function descargar() {
+            const url = document.getElementById('urlInput').value;
+            const mensaje = document.getElementById('mensaje');
+            
+            if(!url) return alert("Pon una URL");
+
+            mensaje.style.display = 'block';
+            mensaje.innerText = "Iniciando descarga... por favor espera.";
+
+            // NOTA: CAMBIAR ESTA URL CUANDO TENGAS EL BACKEND
+            // Por ahora, usa localhost si lo corres local, o la url de Render/Railway
+            const backendUrl = 'http://localhost:3000/download?url=' + encodeURIComponent(url);
+
+            // Creamos un enlace invisible para forzar la descarga
+            window.location.href = backendUrl;
+
+            setTimeout(() => {
+                mensaje.innerText = "Si la descarga no inició, revisa el enlace.";
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
